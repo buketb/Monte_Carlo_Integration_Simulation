@@ -6,12 +6,11 @@ output:
 ---
 
 # Monte-Carlo-Integration 
-Define $f(x)=\exp(-x^2)$. Suppose you are interested in the following integral \[I :=\int_a^b f(x) dx\] and you would like to estimate I using Monte-Carlo simulation techniques.
+#Define $f(x)=\exp(-x^2)$. Suppose we are interested in the following integral \[I :=\int_a^b f(x) dx\] and to estimate using Monte-Carlo simulation techniques.
 
-Write a function that draws n (uniformly distributed) random numbers in the rectangle defined by $x=[a,b]; y = [0,\underset{x\in[a,b]}{\max}f(x)]$ and calculates an estimate of I. Note that a strategy for calculating I is to use
+a function that draws n (uniformly distributed) random numbers in the rectangle defined by $x=[a,b]; y = [0,\underset{x\in[a,b]}{\max}f(x)]$ and calculates an estimate of I. Note that a strategy for calculating I is to use
 \[\frac{P(\text{point under the curve in [a,b]})}{P(\text{point in the rectangle})}= \frac{I}{\text{area of the rectangle}}.\]
 
-Hint: You may find a case distinction useful...
 
 ```{r}
 fx <- function(x){1/exp(x^2)}
@@ -41,9 +40,7 @@ plot(x,y)
 points(x,fx(x), col="blue")
   
 ```
-
-Use the given sequence of Monte-Carlo replications below (given by n) and choose some values for a and b to estimate I using your function. Plot this estimate against n, choose a meaningful title and labels for this graph. Add the result from the build-in function *integrate()* to the figure. Comment shortly on the result.
-
+#Plot the estimate against n and the result from the build-in function *integrate()* to the figure. 
 ```{r}
 n = c(10,100,seq(from = 1000, to = 10000, by = 1000))
 set.seed(123)
@@ -69,7 +66,8 @@ Comment:
 
 
 # Moments 
-Draw a sample ($n=10000$) from a $F(5,3)$ distribution. Calculate the partial variances defined by \[\hat\sigma^2_j = \frac{1}{j}\sum_{k=1}^j (x_k-\overline{x}_k)^2\] Do not use any loops! Plot these partial variances against n, choose a meaningful title and labels. What can you conclude?
+calculation of the partial variances defined by \[\hat\sigma^2_j = \frac{1}{j}\sum_{k=1}^j (x_k-\overline{x}_k)^2\] 
+ the plot these partial variances against n.
 
 ```{r}
 n<-10000
