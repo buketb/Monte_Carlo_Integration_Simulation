@@ -1,11 +1,11 @@
 ---
-title: "Home Assignment 1"
+title: "MC_Int_Sim"
 output:
   pdf_document: default
   html_notebook: default
 ---
 
-# Monte-Carlo-Integration (5,5 points)
+# Monte-Carlo-Integration 
 Define $f(x)=\exp(-x^2)$. Suppose you are interested in the following integral \[I :=\int_a^b f(x) dx\] and you would like to estimate I using Monte-Carlo simulation techniques.
 
 Write a function that draws n (uniformly distributed) random numbers in the rectangle defined by $x=[a,b]; y = [0,\underset{x\in[a,b]}{\max}f(x)]$ and calculates an estimate of I. Note that a strategy for calculating I is to use
@@ -68,7 +68,7 @@ Comment:
 #get closer to the value from the function "integrate" with increasing number of replications in MC simulations, as we expected.
 
 
-# Moments (2 points)
+# Moments 
 Draw a sample ($n=10000$) from a $F(5,3)$ distribution. Calculate the partial variances defined by \[\hat\sigma^2_j = \frac{1}{j}\sum_{k=1}^j (x_k-\overline{x}_k)^2\] Do not use any loops! Plot these partial variances against n, choose a meaningful title and labels. What can you conclude?
 
 ```{r}
@@ -95,6 +95,3 @@ plot((1:n),parvar, type = "l", col="red",
 Comment: 
 ##Since the partial variances graph does not display any convergence of variance around any number, we can claim that F-distribution with (5,3) degrees of freedom does not have finite 2nd central moment (or it is not defined).
 
-
-# Procedure
-Try to solve this tutorial and answer all questions, you are not allowed to use any additional R packages (this means packages that you have to install additionally to those already installed by default). You can work in groups of up to 5 students. Hand in your solution (as a Rmd file) via [e-mail](mailto:kiessner@stat-econ.uni-kiel.de) until 24.01.2021. Make sure to include all names and stu-numbers in your mail!
