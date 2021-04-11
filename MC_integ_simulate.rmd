@@ -1,0 +1,100 @@
+---
+title: "Home Assignment 1"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+# Monte-Carlo-Integration (5,5 points)
+Define $f(x)=\exp(-x^2)$. Suppose you are interested in the following integral \[I :=\int_a^b f(x) dx\] and you would like to estimate I using Monte-Carlo simulation techniques.
+
+Write a function that draws n (uniformly distributed) random numbers in the rectangle defined by $x=[a,b]; y = [0,\underset{x\in[a,b]}{\max}f(x)]$ and calculates an estimate of I. Note that a strategy for calculating I is to use
+\[\frac{P(\text{point under the curve in [a,b]})}{P(\text{point in the rectangle})}= \frac{I}{\text{area of the rectangle}}.\]
+
+Hint: You may find a case distinction useful...
+
+```{r}
+fx <- function(x){1/exp(x^2)}
+
+
+estim.I = function(n){
+  x = runif(n,a,b)
+  y = runif(n,0,max(fx(x)))
+  if(min(a,b)<0 & max(a,b)>0){
+  ra = (abs(a)+abs(b))*abs(max(fx(x)))
+  } else {
+  ra = abs(abs(a)-abs(b))*abs(max(fx(x)))}
+  uc = (fx(x) > y)
+  int = ra * sum(uc)/n
+  return(int)
+}
+
+#a simple visualisation
+a=-1
+b=1
+n=1000
+x = runif(n,a,b)
+y = runif(n,0,max(fx(x)))
+
+
+plot(x,y)
+points(x,fx(x), col="blue")
+  
+```
+
+Use the given sequence of Monte-Carlo replications below (given by n) and choose some values for a and b to estimate I using your function. Plot this estimate against n, choose a meaningful title and labels for this graph. Add the result from the build-in function *integrate()* to the figure. Comment shortly on the result.
+
+```{r}
+n = c(10,100,seq(from = 1000, to = 10000, by = 1000))
+set.seed(123)
+a=-2
+b=2
+
+lst  = c()
+for(i in 1:length(n)){
+  lst[i] = abs( estim.I(n[i]))
+}
+
+int <- integrate(fx,a,b)
+plot(n, lst, type = "l" , xlab = 'n, number of replications in MC', ylab = 'estimated values' , main = 'Monte Carlo Simulation Values to estimate I')
+abline(h=int$value, col="red")
+#Red line shows the value drom the function "intregrate"
+
+```
+
+Comment:
+#As we expected, the estimated value throug the formula 
+\[\frac{P(\text{point under the curve in [a,b]})}{P(\text{point in the rectangle})}= \frac{I}{\text{area o}f the rectangle}}.\] 
+#get closer to the value from the function "integrate" with increasing number of replications in MC simulations, as we expected.
+
+
+# Moments (2 points)
+Draw a sample ($n=10000$) from a $F(5,3)$ distribution. Calculate the partial variances defined by \[\hat\sigma^2_j = \frac{1}{j}\sum_{k=1}^j (x_k-\overline{x}_k)^2\] Do not use any loops! Plot these partial variances against n, choose a meaningful title and labels. What can you conclude?
+
+```{r}
+n<-10000
+set.seed(1234)
+j <- rf(n, 5, 3)
+
+hist(j, breaks = "Scott", xlab = "", ylab = "", probability = T, main = "Simulation of F-Distribution with df 5 & 3")
+
+curve(df(x, 5, 3), 
+      col="blue", lwd=2, add=TRUE, yaxt="n")
+
+
+partmeans <-(cumsum(j))/(1:n)
+parvar <- (1/(1:n))* cumsum((j-partmeans)^2)
+
+plot((1:n),parvar, type = "l", col="red",
+     main = "Simulated Partial Variance of F-Distribution with df 5 & 3", 
+     xlab="Number of Variables", 
+     ylab = "Partial Variance")
+
+```
+
+Comment: 
+##Since the partial variances graph does not display any convergence of variance around any number, we can claim that F-distribution with (5,3) degrees of freedom does not have finite 2nd central moment (or it is not defined).
+
+
+# Procedure
+Try to solve this tutorial and answer all questions, you are not allowed to use any additional R packages (this means packages that you have to install additionally to those already installed by default). You can work in groups of up to 5 students. Hand in your solution (as a Rmd file) via [e-mail](mailto:kiessner@stat-econ.uni-kiel.de) until 24.01.2021. Make sure to include all names and stu-numbers in your mail!
